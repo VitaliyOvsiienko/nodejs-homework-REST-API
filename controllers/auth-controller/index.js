@@ -1,7 +1,7 @@
-const register = require("./register");
+const register = require("./signin");
 const login = require("./login");
 const logout = require("./logout");
-const current = require("./current");
+const current = require("./getCurrent");
 const updateSubscription = require("./updateSubscription");
 
 module.exports = {

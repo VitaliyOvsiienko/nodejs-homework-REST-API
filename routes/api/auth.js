@@ -3,7 +3,11 @@ const router = express.Router();
 const asyncHandler = require("express-async-handler");
 
 const { auth: ctrl } = require("../../controllers");
-const { validateSchema, authenticateToken } = require("../../middlewares");
+const {
+  validateSchema,
+  authenticateToken,
+  upload,
+} = require("../../middlewares");
 const { schemas } = require("../../models/users");
 
 router.post(
@@ -46,5 +50,7 @@ router.patch(
     await ctrl.updateSubscription(req, res, next);
   })
 );
+
+router.patch("/avatars", authenticateToken, upload.single("avatar"));
 
 module.exports = router;
