@@ -1,3 +1,5 @@
-const isValidId = require("./isValidId");
+const validateContactId = require("./validateContactId");
+const validateSchema = require("./validateSchema");
+const authenticateToken = require("./authenticateToken");
 
-module.exports = isValidId;
+module.exports = { validateContactId, validateSchema, authenticateToken };
