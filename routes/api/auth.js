@@ -51,6 +51,11 @@ router.patch(
   })
 );
 
-router.patch("/avatars", authenticateToken, upload.single("avatar"));
+router.patch(
+  "/avatars",
+  authenticateToken,
+  upload.single("avatar"),
+  ctrl.updateAvatar
+);
 
 module.exports = router;

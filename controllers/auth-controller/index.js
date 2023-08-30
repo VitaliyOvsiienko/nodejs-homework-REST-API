@@ -1,13 +1,14 @@
-const register = require("./signin");
+const signup = require("./signin");
 const login = require("./login");
 const logout = require("./logout");
 const current = require("./getCurrent");
 const updateSubscription = require("./updateSubscription");
-
+const updateAvatar = require("./updateAvatar");
 module.exports = {
-  register,
+  signup,
   login,
   logout,
   current,
   updateSubscription,
+  updateAvatar,
 };
