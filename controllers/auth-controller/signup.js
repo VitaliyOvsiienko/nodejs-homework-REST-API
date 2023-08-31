@@ -2,8 +2,9 @@ const bcrypt = require("bcrypt");
 const createError = require("http-errors");
 const asyncHandler = require("express-async-handler");
 const { User } = require("../../models/users");
+const gravatar = require("gravatar");
 
-const register = asyncHandler(async (req, res) => {
+const signup = asyncHandler(async (req, res) => {
   const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
 
@@ -12,9 +13,11 @@ const register = asyncHandler(async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
+  const avatarURL = gravatar.url(email);
   const result = await User.create({
     email,
     password: hashPassword,
+    avatarURL,
     subscription,
   });
 
@@ -30,4 +33,4 @@ const register = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = register;
+module.exports = signup;
