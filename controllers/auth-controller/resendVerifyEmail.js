@@ -1,6 +1,6 @@
 const { User } = require("../../models/users");
 const createError = require("http-errors");
-const { createVerifyEmail, sendEmail } = require("../../helpers");
+const { sendEmail } = require("../../helpers");
 
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
@@ -13,10 +13,10 @@ const resendVerifyEmail = async (req, res) => {
     throw createError(400, "Verification has been already passed");
   }
 
-  const verifyEmail = createVerifyEmail({
+  const verifyEmail = {
     email,
     verificationToken: user.verificationToken,
-  });
+  };
   await sendEmail(verifyEmail);
 
   res.json({
