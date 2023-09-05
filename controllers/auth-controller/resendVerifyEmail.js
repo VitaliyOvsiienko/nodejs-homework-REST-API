@@ -1,19 +1,23 @@
 const { User } = require("../../models/users");
 const createError = require("http-errors");
-const sendEmail = require("../../helpers");
+const { createVerifyEmail, sendEmail } = require("../../helpers");
 
-const resendEmail = async (req, res) => {
+const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
+
   if (!user) {
     throw createError(404, `User not found`);
   }
   if (user.verify) {
-    throw createError(400, "Verification has already been passed");
+    throw createError(400, "Verification has been already passed");
   }
 
-  const mail = (email, user.verificationToken);
-  await sendEmail(mail);
+  const verifyEmail = createVerifyEmail({
+    email,
+    verificationToken: user.verificationToken,
+  });
+  await sendEmail(verifyEmail);
 
   res.json({
     status: "success",
@@ -24,4 +28,4 @@ const resendEmail = async (req, res) => {
   });
 };
 
-module.exports = resendEmail;
+module.exports = resendVerifyEmail;

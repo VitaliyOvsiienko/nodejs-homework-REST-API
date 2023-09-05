@@ -1,41 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const asyncHandler = require("express-async-handler");
 
 const { auth: ctrl } = require("../../controllers");
 const { validateSchema, authenticateToken } = require("../../middlewares");
 const { schemas } = require("../../models/users");
+const { ctrlWrapper } = require("../../helpers");
 
 router.post(
   "/signup",
   validateSchema(schemas.registerSchema),
-  asyncHandler(async (req, res, next) => {
-    await ctrl.signup(req, res, next);
-  })
+  ctrlWrapper(ctrl.signup)
 );
 
-router.get("/verify/:verificationToken", ctrl.verify);
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
 
 router.post(
   "/verify",
   validateSchema(schemas.verifyEmailSchema),
-  ctrl.resendEmail
+  ctrlWrapper(ctrl.resendEmail)
 );
 
 router.post(
   "/login",
   validateSchema(schemas.loginSchema),
-  asyncHandler(async (req, res, next) => {
-    await ctrl.login(req, res, next);
-  })
+  ctrlWrapper(ctrl.login)
 );
 
-router.get(
-  "/logout",
-  authenticateToken,
-  asyncHandler(async (req, res, next) => {
-    await ctrl.logout(req, res, next);
-  })
-);
+router.get("/logout", authenticateToken, ctrlWrapper(ctrl.logout));
 
 module.exports = router;

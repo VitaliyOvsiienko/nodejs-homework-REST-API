@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const asyncHandler = require("express-async-handler");
+const { ctrlWrapper } = require("../../helpers");
 
 const { users: ctrl } = require("../../controllers");
 const {
@@ -10,28 +10,20 @@ const {
 } = require("../../middlewares");
 const { schemas } = require("../../models/users");
 
-router.get(
-  "/current",
-  authenticateToken,
-  asyncHandler(async (req, res, next) => {
-    await ctrl.getCurrent(req, res, next);
-  })
-);
+router.get("/current", authenticateToken, ctrlWrapper(ctrl.getCurrent));
 
 router.patch(
   "/",
   authenticateToken,
   validateSchema(schemas.subscriptionSchema),
-  asyncHandler(async (req, res, next) => {
-    await ctrl.updateSubscription(req, res, next);
-  })
+  ctrlWrapper(ctrl.updateSubscription)
 );
 
 router.patch(
   "/avatars",
   authenticateToken,
   upload.single("avatar"),
-  ctrl.updateAvatar
+  ctrlWrapper(ctrl.updateAvatar)
 );
 
 module.exports = router;

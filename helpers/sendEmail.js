@@ -9,7 +9,8 @@ const sendEmail = async (email, verificationToken) => {
     to: email,
     from: "ovsiyenko80@gmail.com",
     subject: "Verify your email",
-    html: `<p>Click verify email http://localhost:3000/api/auth/verify/${verificationToken}</p>`,
+    html: `<a href="http://localhost:3000/api/auth/verify/${verificationToken}"
+        target="_blank">Click to verify email</a>`,
   };
 
   await sgEmail
