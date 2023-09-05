@@ -20,4 +20,6 @@ const sendEmail = async (email, verificationToken) => {
   return true;
 };
 
+console.log(sendEmail);
+
 module.exports = sendEmail;
